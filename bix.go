@@ -78,7 +78,7 @@ func New(path string, workers ...int) (*Bix, error) {
 	}
 	defer f.Close()
 
-	gz, err := gzip.NewReader(f)
+	gz, err := bgzf.NewReader(f, 0)
 	if err != nil {
 		return nil, errors.Wrapf(err, "bix: error on reading tabix index: %s%s", path, ext)
 	}
