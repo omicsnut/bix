@@ -4,7 +4,6 @@ package bix
 import (
 	"bufio"
 	"bytes"
-	"compress/gzip"
 	"io"
 	"log"
 	"os"
