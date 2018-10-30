@@ -5,7 +5,6 @@ import (
 	"bufio"
 	"bytes"
 	"io"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -217,7 +216,6 @@ func (tbx *Bix) ChunkedReader(chrom string, start, end int) (io.ReadCloser, erro
 	if err == index.ErrInvalid {
 		return index.NewChunkReader(tbx.bgzf, []bgzf.Chunk{})
 	} else if err == index.ErrNoReference {
-		log.Printf("chromosome %s not found in %s\n", chrom, tbx.path)
 		return index.NewChunkReader(tbx.bgzf, []bgzf.Chunk{})
 	} else if err != nil {
 		return nil, errors.Wrapf(err, "bix: error reading Chunks from %s", tbx.path)
@@ -254,7 +252,6 @@ func makeFields(line []byte) [][]byte {
 			for k, f := range fields {
 				c[k] = string(f)
 			}
-			log.Println(s, string(line), c)
 		}
 	*/
 	e := bytes.IndexByte(line[s:], '\t')
@@ -445,8 +442,6 @@ func (b *bixerator) inBounds(line []byte) (bool, error, [][]byte) {
 						if e > start {
 							return true, readErr, toks
 						}
-					} else {
-						log.Println("no end:", b.tbx.path, string(toks[0]), pos, string(toks[3]), a)
 					}
 				}
 			}
